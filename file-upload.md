@@ -14,27 +14,7 @@ The simplest way to add support for file upload is by adding `@UploadedFiles` or
 Express example:
 
 ```ts
-import { Post, Route, FormField, UploadedFiles, UploadedFile } from "tsoa";
-
-@Route("files")
-export class FilesController {
-  @Post("uploadFile")
-  public async uploadFile(
-      @FormField() title: string,
-      @FormField() description: string,
-      @UploadedFiles() files: Express.Multer.File[],
-      @UploadedFile() file: Express.Multer.File,
-  ): Promise<void> {
-    console.log(files);
-  }
-}
-```
-
-Koa example:
-
-
-```ts
-import { Post, Route, FormField, UploadedFiles, UploadedFile } from "tsoa";
+import { Post, Route, FormField, UploadedFiles, UploadedFile, File } from "tsoa";
 
 @Route("files")
 export class FilesController {
@@ -50,7 +30,27 @@ export class FilesController {
 }
 ```
 
-Note, that using the decorator defaults to saving on the disk with a default file location set to the OS's temp folder.
+Koa example:
+
+
+```ts
+import { Post, Route, FormField, UploadedFiles, UploadedFile, File } from "tsoa";
+
+@Route("files")
+export class FilesController {
+  @Post("uploadFile")
+  public async uploadFile(
+      @FormField() title: string,
+      @FormField() description: string,
+      @UploadedFiles() files: File[],
+      @UploadedFile() file: File,
+  ): Promise<void> {
+    console.log(files);
+  }
+}
+```
+
+Note, that using the decorator defaults to store upload file content in memory. Access the content using buffer property
 
 ## Custom multer upload
 
